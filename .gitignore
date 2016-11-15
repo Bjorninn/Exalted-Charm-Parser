@@ -39,3 +39,12 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Charm data
+charms.txt
+charms_clean.txt
+charms_json.json
+
+ma_charms.txt
+ma_charms_clean.txt
+ma_charms_json.json
