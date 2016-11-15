@@ -173,10 +173,25 @@ public class CharmTextCleaner
                 line = a1 + " " + a2;
                 i++;
             }
-            if (line.equals(b1))
+            else if (line.equals(b1))
             {
                 line = b1 + " " + b2;
                 i++;
+            }
+            else if (line.equals("MIXING STYLES"))
+            {
+                i += 8;
+                continue;
+            }
+            else if (line.equals("SILVER-VOICED NIGHTINGALE REMIX"))
+            {
+                i += 10;
+                continue;
+            }
+            else if (line.equals("…WHAT?"))
+            {
+                i += 19;
+                continue;
             }
 
             cleanedCharmText.add(line);

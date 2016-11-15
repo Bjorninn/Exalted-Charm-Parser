@@ -154,11 +154,14 @@ public class CharmSplitter
                 {
                     boolean isSplit = checkPrerequisiteSplit(charmLines.get(i + 1));
 
-                    // Prerequisites are split between two line
+                    // Prerequisites are split between two lines
                     if (isSplit)
                     {
                         String line2 = charmLines.get(i + 1).trim();
                         line = line + " " + line2;
+
+                        // we need to increment i here or else the second prerequisite line will be added to the description.
+                        i++;
                     }
 
                     List<String> split = split(line);
@@ -298,6 +301,9 @@ public class CharmSplitter
                     {
                         String line2 = charmLines.get(i + 1).trim();
                         line = line + " " + line2;
+
+                        // we need to increment i here or else the second prerequisite line will be added to the description.
+                        i++;
                     }
 
                     List<String> split = split(line);
