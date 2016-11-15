@@ -1,9 +1,6 @@
 package eu.elieser;
 
-import eu.elieser.data.Charm;
-import eu.elieser.data.Charms;
-import eu.elieser.data.MartialArtsCharm;
-import eu.elieser.data.MartialArtsCharms;
+import eu.elieser.data.*;
 import eu.elieser.processor.CharmSplitter;
 import eu.elieser.processor.CharmTextCleaner;
 import eu.elieser.reader.ReadWriteTextFileJDK7;
@@ -22,6 +19,10 @@ public class Main
     private static final String MA_FILE_OUTPUT_NAME = "data/ma_charms_clean.txt";
     private static final String MA_JSON_FILE_NAME = "data/ma_charms_json";
 
+    private static final String SPELL_FILE_NAME = "data/spells.txt";
+    private static final String SPELL_FILE_OUTPUT_NAME = "data/spells_clean.txt";
+    private static final String SPELL_JSON_FILE_NAME = "data/spells_json";
+
     private static ReadWriteTextFileJDK7 text;
 
     public static void main(String[] args)
@@ -36,6 +37,9 @@ public class Main
 
             cleanMartialArtsText();
             generateMartialArtsJson();
+
+            cleanSpellText();
+            generateSpellJson();
         }
         catch (IOException e)
         {
@@ -89,5 +93,29 @@ public class Main
         lines = CharmTextCleaner.manualMartialArtsWork(lines);
 
         text.writeLargerTextFile(MA_FILE_OUTPUT_NAME, lines);
+    }
+
+
+    private static void cleanSpellText() throws IOException
+    {
+        List<String> lines = text.readTextFile(SPELL_FILE_NAME);
+
+        lines = CharmTextCleaner.removeSpellHeader(lines);
+        lines = CharmTextCleaner.manualSpellWork(lines);
+
+        text.writeLargerTextFile(SPELL_FILE_OUTPUT_NAME, lines);
+    }
+
+    private static void generateSpellJson() throws IOException
+    {
+        List<String> lines = text.readTextFile(SPELL_FILE_OUTPUT_NAME);
+
+        CharmSplitter splitter = new CharmSplitter();
+        List<Spell> spellList = splitter.splitSpells(lines);
+        Spells spells = new Spells();
+        spells.setSpells(spellList);
+
+        String json = splitter.toJson(spells);
+        text.write(json, SPELL_JSON_FILE_NAME);
     }
 }

@@ -24,7 +24,8 @@ public class CharmSplitter
         DESCRIPTION,
         MASTERY,
         TERRESTRIAL,
-        SPECIAL_ACTIVATION_RULES
+        SPECIAL_ACTIVATION_RULES,
+        DISTORTION
     }
 
     private static final List<String> abilityList = Arrays.asList("Archery", "Athletics", "Awareness", "Brawl", "Bureaucracy",
@@ -34,15 +35,21 @@ public class CharmSplitter
     private static final List<String> maList = Arrays.asList("Snake Style", "Tiger Style", "Single Point Shining Into the Void Style", "White Reaper Style", "Ebon Shadow Style",
             "Crane Style", "Silver-Voiced Nightingale Style", "Righteous Devil Style", "Black Claw Style", "Dreaming Pearl Courtesan Style", "Steel Devil Style");
 
+    private static final List<String> circleList = Arrays.asList("Terrestrial Circle Spells", "Celestial Circle Spells", "Solar Circle Spells");
+
     private static final String MARTIAL_ARTS = "Martial Arts";
 
     private final Set<String> abilitySet;
     private final Set<String> maSet;
+    private final Set<String> circleSet;
+
 
     public CharmSplitter()
     {
         abilitySet = new HashSet<>(abilityList);
         maSet = new HashSet<>(maList);
+        circleSet = new HashSet<>(circleList);
+
     }
 
     public String toJson(Charms charms)
@@ -55,6 +62,118 @@ public class CharmSplitter
     {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setPrettyPrinting().create();
         return gson.toJson(charms);
+    }
+
+    public String toJson(Spells spells)
+    {
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setPrettyPrinting().create();
+        return gson.toJson(spells);
+    }
+
+    public List<Spell> splitSpells(List<String> spellLines)
+    {
+        List<Spell> spells = new ArrayList<>();
+
+        boolean isFirstSpell = true;
+        String currentCircle = "";
+        State state = State.NULL;
+        SpellBuilder spellBuilder = new SpellBuilder();
+
+        final int size = spellLines.size();
+
+        for (int i = 0; i < size; i++)
+        {
+            String line = spellLines.get(i);
+
+            // Check if this is the start of a new ability
+            if (circleSet.contains(line.trim()))
+            {
+                currentCircle = line;
+                continue;
+            }
+
+            if (line.contains("Cost:"))
+            {
+                // Stamp and approve charm if not first charm
+                if (isFirstSpell)
+                {
+                    isFirstSpell = false;
+                }
+                else
+                {
+                    if (state == State.DESCRIPTION)
+                    {
+                        // Remove last description line
+                        spellBuilder.removeLastDescriptionLine();
+                    }
+                    else if(state == State.DISTORTION)
+                    {
+                        // Remove last distortion line
+                        spellBuilder.removeLastDistortionLine();
+                    }
+
+                    Spell spell = spellBuilder.build();
+                    spells.add(spell);
+                }
+
+                state = State.DISCOVERED;
+            }
+
+            if (state == State.DISCOVERED)
+            {
+                // Set ability
+                spellBuilder.setCircle(currentCircle);
+
+                // Retrieve charm name
+                String name = spellLines.get(i - 1);
+                spellBuilder.setName(name);
+
+                // Set cost
+                String cost = line.replace("Cost: ", "").trim().replace(";", "");
+                spellBuilder.setCost(cost);
+
+                // Change state
+                state = State.KEYWORDS;
+            }
+            else if (state == State.KEYWORDS)
+            {
+                line = line.replace("Keywords: ", "").trim();
+
+                if (!line.equals("None"))
+                {
+                    List<String> split = split(line);
+                    spellBuilder.setKeywords(split);
+                }
+
+                state = State.DURATION;
+            }
+            else if (state == State.DURATION)
+            {
+                line = line.replace("Duration: ", "").trim();
+
+                spellBuilder.setDuration(line);
+                state = State.DESCRIPTION;
+            }
+            else if (state == State.DESCRIPTION)
+            {
+                if (line.startsWith("Distortion"))
+                {
+                    state = State.DISTORTION;
+                    line = line.replaceFirst("Distortion", "").trim();
+                    spellBuilder.addDistortionLine(line);
+                }
+                else
+                {
+                    spellBuilder.addDescriptionLine(line);
+                }
+            }
+            else if(state == State.DISTORTION)
+            {
+                spellBuilder.addDistortionLine(line);
+            }
+        }
+
+        return spells;
     }
 
     public List<Charm> splitCharms(List<String> charmLines)

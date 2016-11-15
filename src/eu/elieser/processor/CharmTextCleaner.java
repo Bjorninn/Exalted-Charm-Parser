@@ -231,4 +231,44 @@ public class CharmTextCleaner
 
         return cleanedCharmText;
     }
+
+    public static List<String> removeSpellHeader(List<String> spellText)
+    {
+        return removeMartialArtsHeader(spellText);
+    }
+
+    public static List<String> manualSpellWork(List<String> charmText)
+    {
+        List<String> cleanedCharmText = new ArrayList<>(charmText.size());
+
+        for (int i = 0; i < charmText.size(); i++)
+        {
+            String line = charmText.get(i);
+
+            if (line.equals("EXAMPLE: TWO SORCERERS"))
+            {
+                i += 24;
+                continue;
+            }
+            else if (line.equals("THE RIGHT DEMON FOR THE JOB"))
+            {
+                i += 4;
+                continue;
+            }
+            else if (line.equals("SUMMONING AND BATTLE GROUPS"))
+            {
+                i += 7;
+                continue;
+            }
+            else if (line.equals("NO SHORTCUTS IN HELL"))
+            {
+                i += 15;
+                continue;
+            }
+
+            cleanedCharmText.add(line);
+        }
+
+        return cleanedCharmText;
+    }
 }

@@ -48,3 +48,7 @@ charms_json.json
 ma_charms.txt
 ma_charms_clean.txt
 ma_charms_json.json
+
+spells.txt
+spells_clean.txt
+spells_json.json
