@@ -21,7 +21,8 @@ Now when you run the program it should output two files **charms_json.json** and
 3. Add page number and source book to charms and spells.  
 4. Generate trees from charms.  
 5. Process *cost* string (so probably a list of type and value).
-6. Manually check json for errors.
+6. Add javadoc
+7. Manually check json for errors.
 
 ## JSON Schema
 *Ability Charms*
