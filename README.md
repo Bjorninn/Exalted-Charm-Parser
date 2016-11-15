@@ -1,4 +1,4 @@
-﻿# Exalted-Charm-Parser
+﻿# Exalted Charm Parser - v0.7
 This little java program parses the Charm data from the Exalted 3e Core Rulebook into machine friendly json format.
 This project does not contain any charm data, users need to [buy the book](http://www.drivethrurpg.com/product/162759/Exalted-3rd-Edition) from a vendor like DriveThruRPG and copy the text from
 a legally obtained pdf.
