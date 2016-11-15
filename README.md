@@ -21,7 +21,8 @@ Now when you run the program it should output two files **charms_json.json** and
 3. Generate trees from charms.  
 4. Process *cost* string (so probably a list of type and value).
 5. Add javadoc
-6. Manually check json for errors.
+6. Add **Special Activation Rules** as a seperate entry from description
+7. Manually check json for errors.
 
 ## JSON Schema
 *Ability Charms*
