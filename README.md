@@ -1,11 +1,11 @@
-﻿# Exalted-Charm-Parser
+﻿# Exalted Charm Parser - v0.7
 This little java program parses the Charm data from the Exalted 3e Core Rulebook into machine friendly json format.
 This project does not contain any charm data, users need to [buy the book](http://www.drivethrurpg.com/product/162759/Exalted-3rd-Edition) from a vendor like DriveThruRPG and copy the text from
 a legally obtained pdf.
 
 ## How to prepare the data
 This version works for the pdf that was uploaded by [Onyx Path Publishing](http://www.drivethrurpg.com/browse/pub/4261/Onyx-Path-Publishing)
-to [DriveThruRPG](http://www.drivethrurpg.com/product/162759/Exalted-3rd-Edition) on the 20th of April 2016.
+to [DriveThruRPG](http://www.drivethrurpg.com/product/162759/Exalted-3rd-Edition) on the 20th of April 2016. I used Adobe Acrobat Reader DC, using other pdf readers might change the data somewhat so keep that in mind.
 
 1. Create a folder named data in the root of the project.  
 2. Copy everything from the headline **Archery** on page 255 to the last character on page 423 and paste that into a file called **charms.txt** and
@@ -15,6 +15,14 @@ into a file called ma_charms.txt and place it into the data folder.
 
 Now when you run the program it should output two files **charms_json.json** and **ma_charms_json** into the data folder.
 
+## Todos
+1. Add the ability to process spells.  
+2. Add the ability to process the **Miracles of the Solar Exalted**.  
+3. Add page number and source book to charms and spells.  
+4. Generate trees from charms.  
+5. Process *cost* string (so probably a list of type and value).
+6. Add javadoc
+7. Manually check json for errors.
 
 ## JSON Schema
 *Ability Charms*
