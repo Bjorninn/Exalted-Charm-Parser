@@ -110,6 +110,109 @@ Now when you run the program it should output two files **charms_json.json** and
 ```
 *Martial Arts Charms*
 ```
-
+{
+  "type": "object",
+  "properties": {
+    "charms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "martial_art_style": {
+            "type": "string"
+          },
+          "mastery": {
+            "type": "string"
+          },
+          "terrestrial": {
+            "type": "string"
+          },
+          "special_activation_rules": {
+            "type": "string"
+          },
+          "ability": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "string"
+          },
+          "min_ability": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ]
+          },
+          "min_essence": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ]
+          },
+          "type": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prerequisite_charms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "martial_art_style",
+          "mastery",
+          "terrestrial",
+          "special_activation_rules",
+          "ability",
+          "name",
+          "cost",
+          "min_ability",
+          "min_essence",
+          "type",
+          "duration",
+          "keywords",
+          "prerequisite_charms",
+          "description"
+        ]
+      }
+    }
+  },
+  "required": [
+    "charms"
+  ]
+}
 ```
 
