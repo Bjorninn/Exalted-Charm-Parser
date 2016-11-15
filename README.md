@@ -15,6 +15,14 @@ into a file called ma_charms.txt and place it into the data folder.
 
 Now when you run the program it should output two files **charms_json.json** and **ma_charms_json** into the data folder.
 
+## Todos
+1. Add the ability to process spells.  
+2. Add the ability to process the **Miracles of the Solar Exalted**.  
+3. Add page number and source book to charms and spells.  
+4. Generate trees from charms.  
+5. Process *cost* string (so probably a list of type and value).
+6. Manually check json for errors.
+
 ## JSON Schema
 *Ability Charms*
 ```
