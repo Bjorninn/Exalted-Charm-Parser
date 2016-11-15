@@ -10,9 +10,8 @@ to [DriveThruRPG](http://www.drivethrurpg.com/product/162759/Exalted-3rd-Edition
 1. Create a folder named data in the root of the project.  
 2. Copy everything from the headline **Archery** on page 255 to the last character on page 423 and paste that into a file called **charms.txt** and
 place it into the data folder.  
-3. Copy everything from the headline **Snake Style** on page 427 to the last line of the last charm before the **Sorcery** headline on page 464
-into a file called ma_charms.txt and place it into the data folder.
-4. Copy everything from the headline **Terrestrial Circle Spells** on page 471 to the last line of the last spell before the **Sorcerous Workings** headline on page 483.
+3. Copy everything from the headline **Snake Style** on page 427 to the last line of the last charm before the **Sorcery** headline on page 464 into a file called ma_charms.txt and place it into the data folder.
+4. Copy everything from the headline **Terrestrial Circle Spells** on page 471 to the last line of the last spell before the **Sorcerous Workings** headline on page 483 into a file called spells.txt and place it into the data folder.
 
 Now when you run the program it should output two files **charms_json.json** and **ma_charms_json** into the data folder.
 
