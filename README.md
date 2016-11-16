@@ -16,13 +16,14 @@ place it into the data folder.
 Now when you run the program it should output two files **charms_json.json** and **ma_charms_json** into the data folder.
 
 ## Todos
-1. Add the ability to process the **Miracles of the Solar Exalted**.  
-2. Add page number and source book to charms and spells.  
-3. Generate trees from charms.  
-4. Process *cost* string (so probably a list of type and value).
-5. Add javadoc
-6. Add **Special Activation Rules** as a seperate entry from description
-7. Manually check json for errors.
+- Remove info box text from the charm text
+- Add the ability to process the **Miracles of the Solar Exalted**.  
+- Add page number and source book to charms and spells.  
+- Generate trees from charms.  
+- Process *cost* string (so probably a list of type and value).
+- Add javadoc
+- Add **Special Activation Rules** as a seperate entry from description
+- Manually check json for errors.
 
 ## JSON Schema
 *Ability Charms*
