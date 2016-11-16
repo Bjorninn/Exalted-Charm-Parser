@@ -1,5 +1,7 @@
 package eu.elieser.data;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import java.util.List;
  */
 public class CharmBuilder
 {
+    private static final boolean CONCAT_DESCRIPTION_LINES = false;
+
     private String ability;
     private String name;
     private String cost;
@@ -58,13 +62,27 @@ public class CharmBuilder
             }
         }
 
-        String description = "";
-        for (String string : this.description)
+        String description;
+        if (CONCAT_DESCRIPTION_LINES)
         {
-            description += string + " ";
+            description = StringUtils.join(this.description, " ");
         }
-
+        else
+        {
+            description = StringUtils.join(this.description, "\n");
+        }
         charm.setDescription(description.trim());
+
+        String specialActivation;
+        if (CONCAT_DESCRIPTION_LINES)
+        {
+            specialActivation = StringUtils.join(this.specialActivationRules, " ");
+        }
+        else
+        {
+            specialActivation = StringUtils.join(this.specialActivationRules, "\n");
+        }
+        charm.setSpecialActivation(specialActivation);
 
         clear();
 

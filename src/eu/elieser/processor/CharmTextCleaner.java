@@ -147,6 +147,176 @@ public class CharmTextCleaner
                 line = h1 + " " + h2;
                 i++;
             }
+            else if (line.equals("WHEN DO I NEED TO AIM?"))
+            {
+                i = i + 19;
+                continue;
+            }
+            else if (line.equals("ON TEN OX MEDITATION"))
+            {
+                i = i + 15;
+                continue;
+            }
+            else if (line.equals("ON SURPRISE ANTICIPATION METHOD"))
+            {
+                i = i + 10;
+                continue;
+            }
+            else if (line.equals("SPACE-SAVING CONCESSION"))
+            {
+                i = i + 11;
+                continue;
+            }
+            else if (line.equals("FELLING GIGANTIC FOES"))
+            {
+                i = i + 25;
+                continue;
+            }
+            else if (line.equals("ON THUNDERCLAP RUSH ATTACK"))
+            {
+                i = i + 6;
+                continue;
+            }
+            else if (line.equals("AN EXAMPLE OF FALLING HAMMER STRIKE"))
+            {
+                i = i + 7;
+                continue;
+            }
+            else if (line.equals("ON POINT-GENERATING CHARMS"))
+            {
+                i = i + 13;
+                continue;
+            }
+            else if (line.equals("ON HUNDRED SHADOW WAYS"))
+            {
+                i = i + 9;
+                continue;
+            }
+            else if (line.equals("ON DESTINY-MANIFESTING METHOD"))
+            {
+                i = i + 20;
+                continue;
+            }
+            else if (line.equals("If a spirit recognizes the Lawgiver as"))
+            {
+                i = i + 12;
+                continue;
+            }
+            else if (line.equals("ON DIVINE MANTLE"))
+            {
+                i = i + 22;
+                continue;
+            }
+            else if (line.equals("ON MASTER PLAN MEDITATION"))
+            {
+                i = i + 31;
+                continue;
+            }
+            else if (line.equals("WRITTEN VS. SPOKEN EFFECTS"))
+            {
+                i = i + 23;
+                continue;
+            }
+            else if (line.equals("ARTISTIC TALENT: LINGUISTICS OR CRAFT?"))
+            {
+                i = i + 18;
+                continue;
+            }
+            else if (line.equals("THAT BURNING QUESTION"))
+            {
+                i = i + 3;
+                continue;
+            }
+            else if (line.equals("ON TWISTED WORDS TECHNIQUE"))
+            {
+                i = i + 29;
+                continue;
+            }
+            else if (line.equals("FATE OF THE MIDDLEMARCHES"))
+            {
+                i = i + 12;
+                continue;
+            }
+            else if (line.equals("ON UNSTOPPABLE MAGNUS APPROACH"))
+            {
+                i = i + 6;
+                continue;
+            }
+            else if (line.equals("ON FIVEFOLD BULWARK STANCE"))
+            {
+                i = i + 13;
+                continue;
+            }
+            else if (line.equals("SCENE OF DESTRUCTION"))
+            {
+                i = i + 3;
+                continue;
+            }
+            else if (line.equals("DON’T GET STAGE FRIGHT"))
+            {
+                i = i + 3;
+                continue;
+            }
+            else if (line.equals("ON INFECTIOUS ZEALOTRY APPROACH"))
+            {
+                i = i + 7;
+                continue;
+            }
+            else if (line.equals("REMEMBER THE RED RULE!"))
+            {
+                i = i + 8;
+                continue;
+            }
+            else if (line.equals("EXAMPLE HAZARD"))
+            {
+                i = i + 12;
+                continue;
+            }
+            else if (line.equals("SOCIETAL INFLUENCE AND GROUP DYNAMICS"))
+            {
+                i = i + 11;
+                continue;
+            }
+            else if (line.equals("PERSONAS AND LIMIT BREAK"))
+            {
+                i = i + 3;
+                continue;
+            }
+            else if (line.equals("PERSONAS: RULES AND LIMITATIONS"))
+            {
+                i = i + 46;
+                continue;
+            }
+            else if (line.equals("ON VANISHING FROM MIND’S EYE METHOD"))
+            {
+                i = i + 4;
+                continue;
+            }
+            else if (line.equals("ON SPIRIT-TIED PET"))
+            {
+                i = i + 2;
+                continue;
+            }
+            else if (line.equals("ON BESTIAL TRAITS TECHNIQUE"))
+            {
+                i = i + 2;
+                continue;
+            }
+            else if (line.equals("A FAMILIAR INVESTMENT"))
+            {
+                i = i + 7;
+                continue;
+            }
+            else if (line.equals("ON SAGA BEAST VIRTUE"))
+            {
+                i = i + 2;
+                continue;
+            }
+            else if (line.equals("ELECTED TARGETS"))
+            {
+                i = i + 12;
+                continue;
+            }
 
             cleanedCharmText.add(line);
         }

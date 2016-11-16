@@ -20,6 +20,10 @@ public class Charm
     private List<String> keywords;
     private List<String> prerequisiteCharms;
     private String description;
+    private String specialActivation;
+
+    private Integer page;
+    private SourceBook source;
 
     public Charm()
     {
@@ -125,6 +129,36 @@ public class Charm
     public void setMinEssence(Aspect minEssence)
     {
         this.minEssence = minEssence;
+    }
+
+    public String getSpecialActivation()
+    {
+        return specialActivation;
+    }
+
+    public void setSpecialActivation(String specialActivation)
+    {
+        this.specialActivation = specialActivation;
+    }
+
+    public Integer getPage()
+    {
+        return page;
+    }
+
+    public void setPage(Integer page)
+    {
+        this.page = page;
+    }
+
+    public SourceBook getSource()
+    {
+        return source;
+    }
+
+    public void setSource(SourceBook source)
+    {
+        this.source = source;
     }
 
     @Override

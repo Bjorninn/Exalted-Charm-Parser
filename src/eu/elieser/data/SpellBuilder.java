@@ -95,7 +95,6 @@ public class SpellBuilder
         this.description.remove(description.size() - 1);
     }
 
-
     public void addDistortionLine(String distortion)
     {
         this.distortion.add(distortion);

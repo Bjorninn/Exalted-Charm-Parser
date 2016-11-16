@@ -48,7 +48,7 @@ import java.util.Scanner;
 public class ReadWriteTextFileJDK7
 {
 
-    public ReadWriteTextFileJDK7() throws IOException
+    public ReadWriteTextFileJDK7()
     {
 
     }
@@ -56,7 +56,7 @@ public class ReadWriteTextFileJDK7
     private static final Charset ENCODING = StandardCharsets.UTF_8;
 
     //For larger files
-    public List<String> readTextFile(String fileName) throws IOException
+    public List<String> readTextFile(String fileName)
     {
         List<String> lines = new ArrayList<>(15000);
         Path path = Paths.get(fileName);
@@ -69,11 +69,15 @@ public class ReadWriteTextFileJDK7
                 lines.add(scanner.nextLine());
             }
         }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
         return lines;
     }
 
-    void readLargerTextFileAlternate(String aFileName) throws IOException
+    void readLargerTextFileAlternate(String aFileName)
     {
         Path path = Paths.get(aFileName);
         try (BufferedReader reader = Files.newBufferedReader(path, ENCODING))
@@ -85,9 +89,13 @@ public class ReadWriteTextFileJDK7
                 log(line);
             }
         }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    public void writeLargerTextFile(String aFileName, List<String> aLines) throws IOException
+    public void writeLargerTextFile(String aFileName, List<String> aLines)
     {
         Path path = Paths.get(aFileName);
         try (BufferedWriter writer = Files.newBufferedWriter(path, ENCODING))
@@ -97,6 +105,10 @@ public class ReadWriteTextFileJDK7
                 writer.write(line);
                 writer.newLine();
             }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
 

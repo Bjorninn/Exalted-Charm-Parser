@@ -18,7 +18,7 @@ public class Spell
 
     public Spell()
     {
-        keywords= new ArrayList<>();
+        keywords = new ArrayList<>();
     }
 
     public String getName()

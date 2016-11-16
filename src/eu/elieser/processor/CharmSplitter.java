@@ -1,9 +1,5 @@
 package eu.elieser.processor;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import eu.elieser.Log;
 import eu.elieser.data.*;
 
 import java.util.*;
@@ -25,7 +21,7 @@ public class CharmSplitter
         MASTERY,
         TERRESTRIAL,
         SPECIAL_ACTIVATION_RULES,
-        DISTORTION
+        DISTORTION,
     }
 
     private static final List<String> abilityList = Arrays.asList("Archery", "Athletics", "Awareness", "Brawl", "Bureaucracy",
@@ -43,34 +39,14 @@ public class CharmSplitter
     private final Set<String> maSet;
     private final Set<String> circleSet;
 
-
     public CharmSplitter()
     {
         abilitySet = new HashSet<>(abilityList);
         maSet = new HashSet<>(maList);
         circleSet = new HashSet<>(circleList);
-
     }
 
-    public String toJson(Charms charms)
-    {
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setPrettyPrinting().create();
-        return gson.toJson(charms);
-    }
-
-    public String toJson(MartialArtsCharms charms)
-    {
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setPrettyPrinting().create();
-        return gson.toJson(charms);
-    }
-
-    public String toJson(Spells spells)
-    {
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setPrettyPrinting().create();
-        return gson.toJson(spells);
-    }
-
-    public List<Spell> splitSpells(List<String> spellLines)
+    public Spells splitSpells(List<String> spellLines)
     {
         List<Spell> spells = new ArrayList<>();
 
@@ -106,7 +82,7 @@ public class CharmSplitter
                         // Remove last description line
                         spellBuilder.removeLastDescriptionLine();
                     }
-                    else if(state == State.DISTORTION)
+                    else if (state == State.DISTORTION)
                     {
                         // Remove last distortion line
                         spellBuilder.removeLastDistortionLine();
@@ -167,16 +143,16 @@ public class CharmSplitter
                     spellBuilder.addDescriptionLine(line);
                 }
             }
-            else if(state == State.DISTORTION)
+            else if (state == State.DISTORTION)
             {
                 spellBuilder.addDistortionLine(line);
             }
         }
 
-        return spells;
+        return new Spells(spells);
     }
 
-    public List<Charm> splitCharms(List<String> charmLines)
+    public Charms splitCharms(List<String> charmLines)
     {
         List<Charm> charms = new ArrayList<>();
 
@@ -292,14 +268,28 @@ public class CharmSplitter
             }
             else if (state == State.DESCRIPTION)
             {
-                charmBuilder.addDescriptionLine(line);
+                if (line.startsWith("Special activation rules: "))
+                {
+                    state = State.SPECIAL_ACTIVATION_RULES;
+                    line = line.replace("Special activation rules: ", "");
+                    charmBuilder.addSpecialActivationLine(line);
+                }
+                else
+                {
+                    charmBuilder.addDescriptionLine(line);
+                }
+            }
+            else if (state == State.SPECIAL_ACTIVATION_RULES)
+            {
+                line = line.replace("Special activation rules: ", "");
+                charmBuilder.addSpecialActivationLine(line);
             }
         }
 
-        return charms;
+        return new Charms(charms);
     }
 
-    public List<MartialArtsCharm> splitMartialArtsCharms(List<String> charmLines)
+    public MartialArtsCharms splitMartialArtsCharms(List<String> charmLines)
     {
         List<MartialArtsCharm> charms = new ArrayList<>();
 
@@ -372,9 +362,6 @@ public class CharmSplitter
                 String mins = line.substring(index).replace("Mins: ", "").trim();
 
                 charmBuilder.setCost(cost);
-
-                Log.d(name);
-                Log.d(mins);
 
                 List<Aspect> aspects = splitAspectString(mins);
                 charmBuilder.setMins(aspects);
@@ -516,7 +503,7 @@ public class CharmSplitter
             }
         }
 
-        return charms;
+        return new MartialArtsCharms(charms);
     }
 
     private boolean checkPrerequisiteSplit(String string)

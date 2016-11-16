@@ -1,5 +1,6 @@
 package eu.elieser.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,18 @@ import java.util.List;
  */
 public class Charms
 {
-    private List<Charm> charms;
+    private final List<Charm> charms;
+
+    public Charms(List<Charm> charms)
+    {
+        this.charms = new ArrayList<>(charms.size());
+        this.charms.addAll(charms);
+    }
+
+    public Charms()
+    {
+        charms = new ArrayList<>();
+    }
 
     public List<Charm> getCharms()
     {
@@ -16,6 +28,7 @@ public class Charms
 
     public void setCharms(List<Charm> charms)
     {
-        this.charms = charms;
+        this.charms.clear();
+        this.charms.addAll(charms);
     }
 }

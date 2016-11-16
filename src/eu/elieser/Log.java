@@ -9,6 +9,4 @@ public class Log
     {
         System.out.println(msg);
     }
-
-
 }
