@@ -55,3 +55,5 @@ spells_json.json
 
 charms_motse.txt
 charms_motse_json.json
+.DS_Store
+data/

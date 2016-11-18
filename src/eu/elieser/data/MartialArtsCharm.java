@@ -8,7 +8,6 @@ public class MartialArtsCharm extends Charm
     private String martialArtStyle;
     private String mastery;
     private String terrestrial;
-    private String specialActivationRules;
 
     public String getMartialArtStyle()
     {
@@ -38,15 +37,5 @@ public class MartialArtsCharm extends Charm
     public void setTerrestrial(String terrestrial)
     {
         this.terrestrial = terrestrial;
-    }
-
-    public String getSpecialActivationRules()
-    {
-        return specialActivationRules;
-    }
-
-    public void setSpecialActivationRules(String specialActivationRules)
-    {
-        this.specialActivationRules = specialActivationRules;
     }
 }

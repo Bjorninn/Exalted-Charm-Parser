@@ -25,7 +25,7 @@ public class CharmBuilder
     private String martialArtStyle;
     private List<String> mastery;
     private List<String> terrestrial;
-    private List<String> specialActivationRules;
+    private List<String> specialActivation;
 
     public CharmBuilder()
     {
@@ -36,53 +36,13 @@ public class CharmBuilder
 
         mastery = new ArrayList<>();
         terrestrial = new ArrayList<>();
-        specialActivationRules = new ArrayList<>();
+        specialActivation = new ArrayList<>();
     }
 
     public Charm build()
     {
         Charm charm = new Charm();
-        charm.setAbility(ability);
-        charm.setName(name);
-        charm.setCost(cost);
-        charm.setType(type);
-        charm.setKeywords(keywords);
-        charm.setDuration(duration);
-        charm.setPrerequisiteCharms(prerequisiteCharms);
-
-        for (Aspect aspect : mins)
-        {
-            if (aspect.getName().equals("Essence"))
-            {
-                charm.setMinEssence(aspect);
-            }
-            else
-            {
-                charm.setMinAbility(aspect);
-            }
-        }
-
-        String description;
-        if (CONCAT_DESCRIPTION_LINES)
-        {
-            description = StringUtils.join(this.description, " ");
-        }
-        else
-        {
-            description = StringUtils.join(this.description, "\n");
-        }
-        charm.setDescription(description.trim());
-
-        String specialActivation;
-        if (CONCAT_DESCRIPTION_LINES)
-        {
-            specialActivation = StringUtils.join(this.specialActivationRules, " ");
-        }
-        else
-        {
-            specialActivation = StringUtils.join(this.specialActivationRules, "\n");
-        }
-        charm.setSpecialActivation(specialActivation);
+        build(charm);
 
         clear();
 
@@ -97,7 +57,6 @@ public class CharmBuilder
         charm.setMartialArtStyle(martialArtStyle);
         charm.setTerrestrial(concatList(this.terrestrial));
         charm.setMastery(concatList(this.mastery));
-        charm.setSpecialActivationRules(concatList(this.specialActivationRules));
 
         clear();
 
@@ -127,17 +86,23 @@ public class CharmBuilder
         }
 
         charm.setDescription(concatList(this.description));
+        charm.setSpecialActivation(concatList(specialActivation));
     }
 
     private String concatList(List<String> strings)
     {
-        String concat = "";
-        for (String string : strings)
+        String string;
+
+        if (CONCAT_DESCRIPTION_LINES)
         {
-            concat += string + " ";
+            string = StringUtils.join(strings, " ");
+        }
+        else
+        {
+            string = StringUtils.join(strings, "\n");
         }
 
-        return concat.trim();
+        return string.trim();
     }
 
     private void clear()
@@ -154,7 +119,7 @@ public class CharmBuilder
         martialArtStyle = null;
         terrestrial.clear();
         mastery.clear();
-        specialActivationRules.clear();
+        specialActivation.clear();
     }
 
     public void setAbility(String ability)
@@ -227,7 +192,7 @@ public class CharmBuilder
 
     public void removeLastSpecialActivationLine()
     {
-        this.specialActivationRules.remove(specialActivationRules.size() - 1);
+        this.specialActivation.remove(specialActivation.size() - 1);
     }
 
     public void setMartialArtStyle(String martialArtStyle)
@@ -247,6 +212,6 @@ public class CharmBuilder
 
     public void addSpecialActivationLine(String line)
     {
-        this.specialActivationRules.add(line);
+        this.specialActivation.add(line);
     }
 }
