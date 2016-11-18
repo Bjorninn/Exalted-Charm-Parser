@@ -139,9 +139,16 @@ public class CharmTextCleaner
                 line = line.trim() + " " + c2.trim();
                 i++;
             }
+            else if (line.equals("Mins: Investigation 3, Essence 1, Type: Supplemental"))
+            {
+                cleanedCharmText.add("Mins: Investigation 3, Essence 1");
+                line = "Type: Supplemental";
+            }
 
             cleanedCharmText.add(line);
         }
+
+
 
         return cleanedCharmText;
     }
@@ -387,6 +394,10 @@ public class CharmTextCleaner
             {
                 i = i + 12;
                 continue;
+            }
+            else if (line.contains("Cost:—;"))
+            {
+                line = line.replace("Cost:—;", "Cost: —;");
             }
 
             cleanedCharmText.add(line);

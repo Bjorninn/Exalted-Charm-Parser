@@ -182,7 +182,7 @@ public class CharmSplitter
                 continue;
             }
 
-            if (line.contains("Cost:") && line.contains("Mins:"))
+            if (line.startsWith("Cost:"))
             {
                 // Stamp and approve charm if not first charm
                 if (isFirstCharm)
@@ -216,14 +216,26 @@ public class CharmSplitter
                 String name = charmLines.get(i - 1);
                 charmBuilder.setName(name);
 
-                // Set cost and mins in new charm
-                int index = line.indexOf("Mins: ");
+                String cost;
+                String mins;
 
-                String cost = line.substring(0, index).replace("Cost: ", "").trim().replace(";", "");
-                String mins = line.substring(index).replace("Mins: ", "").trim();
+                // Set cost and mins in new charm
+                if (line.contains("Mins:"))
+                {
+                    int index = line.indexOf("Mins: ");
+
+                    cost = line.substring(0, index).replace("Cost: ", "").trim().replace(";", "");
+                    mins = line.substring(index).replace("Mins: ", "").trim();
+                }
+                else
+                {
+                    cost = line.replace("Cost: ", "").trim().replace(";", "");
+                    mins = charmLines.get(i + 1).replace("Mins: ", "").trim().replace(";", "");
+                    i++;
+                }
 
                 charmBuilder.setCost(cost);
-
+                Log.d(mins);
                 List<Aspect> aspects = splitAspectString(mins);
                 charmBuilder.setMins(aspects);
 

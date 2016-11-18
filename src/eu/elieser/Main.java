@@ -24,7 +24,7 @@ public class Main
 
         Charms motseSolarCharms = rulebookParser.processMotseSolarCharms();
 
-        //CharmTree charmTree = new CharmTree();
-        //charmTree.construct(solarCharms);
+        CharmTree charmTree = new CharmTree();
+        charmTree.construct(solarCharms);
     }
 }
