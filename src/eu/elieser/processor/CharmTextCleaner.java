@@ -44,6 +44,38 @@ public class CharmTextCleaner
         return cleanedCharmText;
     }
 
+    public static List<String> removeHeader(List<String> charmText, String header1, String header2)
+    {
+        List<String> cleanedCharmText = new ArrayList<>(charmText.size());
+
+        int clock = -1;
+
+        for (String line : charmText)
+        {
+            if (clock < 0)
+            {
+                if (line.equals(header1))
+                {
+                    clock = 1;
+                }
+                else if (line.equals(header2))
+                {
+                    clock = 1;
+                }
+                else
+                {
+                    cleanedCharmText.add(line);
+                }
+            }
+            else
+            {
+                clock--;
+            }
+        }
+
+        return cleanedCharmText;
+    }
+
     public static List<String> cleanEssence(List<String> charmText)
     {
         List<String> cleanedCharmText = new ArrayList<>(charmText.size());
@@ -71,6 +103,52 @@ public class CharmTextCleaner
 
             cleanedCharmText.add(line);
         }
+
+        return cleanedCharmText;
+    }
+
+    public static List<String> fixLongCharmNamesMotse(List<String> charmText)
+    {
+        List<String> cleanedCharmText = new ArrayList<>(charmText.size());
+
+        String a1 = "Victorious Wreath";
+        String a2 = "(Against the World Stance)";
+
+        String b1 = "Voice-Empowering Aspect";
+        String b2 = "(Aspect-Imbued Voice)";
+
+        String c1 = "Divinity-Conferring Touch";
+        String c2 = "(Celestial Exaltation Method)";
+
+        for (int i = 0; i < charmText.size(); i++)
+        {
+            String line = charmText.get(i);
+
+            if (line.trim().equals(a1))
+            {
+                line = line.trim() + " " + a2.trim();
+                i++;
+            }
+            else if (line.trim().equals(b1))
+            {
+                line = line.trim() + " " + b2.trim();
+                i++;
+            }
+            else if (line.trim().equals(c1))
+            {
+                line = line.trim() + " " + c2.trim();
+                i++;
+            }
+            else if (line.equals("Mins: Investigation 3, Essence 1, Type: Supplemental"))
+            {
+                cleanedCharmText.add("Mins: Investigation 3, Essence 1");
+                line = "Type: Supplemental";
+            }
+
+            cleanedCharmText.add(line);
+        }
+
+
 
         return cleanedCharmText;
     }
@@ -316,6 +394,10 @@ public class CharmTextCleaner
             {
                 i = i + 12;
                 continue;
+            }
+            else if (line.contains("Cost:—;"))
+            {
+                line = line.replace("Cost:—;", "Cost: —;");
             }
 
             cleanedCharmText.add(line);

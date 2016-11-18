@@ -3,6 +3,7 @@ package eu.elieser.processor;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import eu.elieser.Log;
 import eu.elieser.data.*;
 import eu.elieser.reader.ReadWriteTextFileJDK7;
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +29,10 @@ public class RulebookParser
     private static final String SPELL_FILE_NAME = "data/spells.txt";
     //private static final String SPELL_FILE_OUTPUT_NAME = "data/spells_clean.txt";
     private static final String SPELL_JSON_FILE_NAME = "data/spells_json";
+
+    private static final String MOTSE_SOLAR_CHARMS_FILE_NAME = "data/charms_motse.txt";
+    //private static final String CORE_RULEBOOK_SOLAR_CHARMS_OUTPUT_FILE_NAME = "data/charms_clean.txt";
+    private static final String MOTSE_SOLAR_CHARMS_JSON_FILE_NAME = "data/charms_motse_json";
 
     private final ReadWriteTextFileJDK7 text;
     private final CharmSplitter splitter;
@@ -121,11 +126,16 @@ public class RulebookParser
     public Spells processCoreRulebookSpells()
     {
         List<String> lines = loadRulebookText(SPELL_FILE_NAME);
-
+        Map<String, Integer> spellPages = getCharmPages(lines, 471);
         lines = cleanCoreRulebookSpellText(lines);
         Spells spells = parseCoreRulebookSpellText(lines);
 
-        // TODO spell pages
+        for (Spell spell :
+                spells.getSpells())
+        {
+            spell.setPage(spellPages.get(spell.getName()));
+            spell.setSource(SourceBook.CORE);
+        }
 
         String json = exportToJson(spells);
         save(json, SPELL_JSON_FILE_NAME);
@@ -145,6 +155,45 @@ public class RulebookParser
     {
         return splitter.splitSpells(lines);
     }
+
+    //----------------------------------------
+    // SOLAR CHARMS FROM MIRACLES OF THE SOLAR EXALTED
+    //----------------------------------------
+
+    public Charms processMotseSolarCharms()
+    {
+        List<String> lines = loadRulebookText(MOTSE_SOLAR_CHARMS_FILE_NAME);
+        Map<String, Integer> charmPages = getCharmPages(lines, 5);
+        lines = cleanMotseSolarCharmsText(lines);
+        Charms charms = parseMotseSolarCharmsText(lines);
+
+        for (Charm charm :
+                charms.getCharms())
+        {
+            charm.setPage(charmPages.get(charm.getName()));
+            charm.setSource(SourceBook.MIRACLES_OF_THE_SOLAR_EXALTED);
+        }
+
+        String json = exportToJson(charms);
+        save(json, MOTSE_SOLAR_CHARMS_JSON_FILE_NAME);
+
+        return charms;
+    }
+
+    public List<String> cleanMotseSolarCharmsText(List<String> lines)
+    {
+        lines = CharmTextCleaner.removeHeader(lines, "New S olar Charms", "M I R AC L E S O F T H E S O L A R E X A LT E D");
+        lines = CharmTextCleaner.cleanEssence(lines);
+        lines = CharmTextCleaner.fixLongCharmNamesMotse(lines);
+
+        return lines;
+    }
+
+    public Charms parseMotseSolarCharmsText(List<String> lines)
+    {
+        return splitter.splitCharms(lines);
+    }
+
 
     //----------------------------------------
     // UTIL FUNCTIONS

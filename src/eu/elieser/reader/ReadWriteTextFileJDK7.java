@@ -28,6 +28,8 @@ package eu.elieser.reader;
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import eu.elieser.Log;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -58,20 +60,28 @@ public class ReadWriteTextFileJDK7
     //For larger files
     public List<String> readTextFile(String fileName)
     {
-        List<String> lines = new ArrayList<>(15000);
         Path path = Paths.get(fileName);
-        try (Scanner scanner = new Scanner(path, ENCODING.name()))
+        List<String> lines = new ArrayList<>(15000);
+
+        if (Files.exists(path))
         {
-            while (scanner.hasNextLine())
+            try (Scanner scanner = new Scanner(path, ENCODING.name()))
             {
-                //process each line in some way
-                //log(scanner.nextLine());
-                lines.add(scanner.nextLine());
+                while (scanner.hasNextLine())
+                {
+                    //process each line in some way
+                    //log(scanner.nextLine());
+                    lines.add(scanner.nextLine());
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
             }
         }
-        catch (IOException e)
+        else
         {
-            e.printStackTrace();
+            Log.d("File: " + fileName + " not found.");
         }
 
         return lines;

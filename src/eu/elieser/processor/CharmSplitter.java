@@ -1,5 +1,6 @@
 package eu.elieser.processor;
 
+import eu.elieser.Log;
 import eu.elieser.data.*;
 
 import java.util.*;
@@ -61,7 +62,7 @@ public class CharmSplitter
         {
             String line = spellLines.get(i);
 
-            // Check if this is the start of a new ability
+            // Check if this is the start of a new circle
             if (circleSet.contains(line.trim()))
             {
                 currentCircle = line;
@@ -147,6 +148,13 @@ public class CharmSplitter
             {
                 spellBuilder.addDistortionLine(line);
             }
+
+            // if this is the last line then build and add the last spell before we quit
+            if (i == size - 1)
+            {
+                Spell spell = spellBuilder.build();
+                spells.add(spell);
+            }
         }
 
         return new Spells(spells);
@@ -174,7 +182,7 @@ public class CharmSplitter
                 continue;
             }
 
-            if (line.contains("Cost:") && line.contains("Mins:"))
+            if (line.startsWith("Cost:"))
             {
                 // Stamp and approve charm if not first charm
                 if (isFirstCharm)
@@ -183,8 +191,14 @@ public class CharmSplitter
                 }
                 else
                 {
-                    // Remove last description line
-                    charmBuilder.removeLastDescriptionLine();
+                    if (state == State.DESCRIPTION)
+                    {
+                        charmBuilder.removeLastDescriptionLine();
+                    }
+                    else if (state == State.SPECIAL_ACTIVATION_RULES)
+                    {
+                        charmBuilder.removeLastSpecialActivationLine();
+                    }
 
                     Charm charm = charmBuilder.build();
                     charms.add(charm);
@@ -202,14 +216,26 @@ public class CharmSplitter
                 String name = charmLines.get(i - 1);
                 charmBuilder.setName(name);
 
-                // Set cost and mins in new charm
-                int index = line.indexOf("Mins: ");
+                String cost;
+                String mins;
 
-                String cost = line.substring(0, index).replace("Cost: ", "").trim().replace(";", "");
-                String mins = line.substring(index).replace("Mins: ", "").trim();
+                // Set cost and mins in new charm
+                if (line.contains("Mins:"))
+                {
+                    int index = line.indexOf("Mins: ");
+
+                    cost = line.substring(0, index).replace("Cost: ", "").trim().replace(";", "");
+                    mins = line.substring(index).replace("Mins: ", "").trim();
+                }
+                else
+                {
+                    cost = line.replace("Cost: ", "").trim().replace(";", "");
+                    mins = charmLines.get(i + 1).replace("Mins: ", "").trim().replace(";", "");
+                    i++;
+                }
 
                 charmBuilder.setCost(cost);
-
+                Log.d(mins);
                 List<Aspect> aspects = splitAspectString(mins);
                 charmBuilder.setMins(aspects);
 
@@ -283,6 +309,13 @@ public class CharmSplitter
             {
                 line = line.replace("Special activation rules: ", "");
                 charmBuilder.addSpecialActivationLine(line);
+            }
+
+            // if this is the last line then build and add the last charm before we quit
+            if (i == size - 1)
+            {
+                Charm charm = charmBuilder.build();
+                charms.add(charm);
             }
         }
 
@@ -500,6 +533,13 @@ public class CharmSplitter
                 {
                     charmBuilder.addSpecialActivationLine(line);
                 }
+            }
+
+            // if this is the last line then build and add the last charm before we quit
+            if (i == size - 1)
+            {
+                MartialArtsCharm charm = charmBuilder.buildMa();
+                charms.add(charm);
             }
         }
 

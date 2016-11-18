@@ -22,6 +22,8 @@ public class Main
         MartialArtsCharms martialArtsCharms = rulebookParser.processCoreRulebookMartialArtsCharms();
         Spells spells = rulebookParser.processCoreRulebookSpells();
 
+        Charms motseSolarCharms = rulebookParser.processMotseSolarCharms();
+
         CharmTree charmTree = new CharmTree();
         charmTree.construct(solarCharms);
     }

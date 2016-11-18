@@ -16,6 +16,9 @@ public class Spell
     private String description;
     private String distortion;
 
+    private Integer page;
+    private SourceBook source;
+
     public Spell()
     {
         keywords = new ArrayList<>();
@@ -89,5 +92,25 @@ public class Spell
     public void setDistortion(String distortion)
     {
         this.distortion = distortion;
+    }
+
+    public Integer getPage()
+    {
+        return page;
+    }
+
+    public void setPage(Integer page)
+    {
+        this.page = page;
+    }
+
+    public SourceBook getSource()
+    {
+        return source;
+    }
+
+    public void setSource(SourceBook source)
+    {
+        this.source = source;
     }
 }
